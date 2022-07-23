@@ -14,7 +14,7 @@ import geoIP from 'geoip-lite';
 
 const logRequest = (req, res, next) => {
     let reqTime = new Date();
-    let reqIP = req.socket.remoteAddress;
+    let reqIP = req.headers['cf-connecting-ip'] || 0;
     let location = geoIP.lookup(reqIP);
 
     let log = `
