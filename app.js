@@ -20,8 +20,14 @@ const logRequest = (req, res, next) => {
     let log = `
         [ ${reqTime} ]
         [ IP: ${reqIP} ]
-        [ FROM: ${location["country"]}, ${location["city"]}}]
     `;
+
+    if(location){
+        log += `
+            [ FROM: ${location["country"]}, ${location["city"]}}]
+        `
+    }
+
     if(cfg.telegram && cfg.telegram.bot){
         telegramBot.sendMessage(log);
     }
