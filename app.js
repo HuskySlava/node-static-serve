@@ -1,15 +1,30 @@
-const express = require('express');
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
+import {telegramBot} from "./telegram-bot.js";
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const cfg = JSON.parse(fs.readFileSync('./cfg.json'));
 const listenPort = cfg.serverPort;
+import geoIP from 'geoip-lite';
 
 const logRequest = (req, res, next) => {
     let reqTime = new Date();
-    let reqIP = req.socket.remoteAddress; 
-    let log = `"${req.originalUrl}","${reqTime}","${reqIP}" \n`;
-    fs.appendFile(cfg.logFile, log, () => {});
+    let reqIP = req.socket.remoteAddress;
+    let location = geoIP.lookup('207.97.227.239');
+
+    let log = `
+        [ ${reqTime} ]
+        [ IP: ${reqIP} ]
+        [ FROM: ${location["country"]}, ${location["city"]}}]
+    `;
+    if(cfg.telegram && cfg.telegram.bot){
+        telegramBot.sendMessage(log);
+    }
     next();
 }
 

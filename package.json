@@ -1,22 +1,25 @@
 {
-  "name": "node-static-serve",
-  "version": "1.0.0",
-  "description": "Static content server",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/HuskySlava/node-static-serve.git"
-  },
-  "author": "Slava Mihaelov",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/HuskySlava/node-static-serve/issues"
-  },
-  "homepage": "https://github.com/HuskySlava/node-static-serve#readme",
-  "dependencies": {
-    "express": "^4.18.1"
-  }
+    "name": "node-static-serve",
+    "version": "1.0.0",
+    "description": "Static content server",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/HuskySlava/node-static-serve.git"
+    },
+    "author": "Slava Mihaelov",
+    "license": "UNLICENSED",
+    "bugs": {
+        "url": "https://github.com/HuskySlava/node-static-serve/issues"
+    },
+    "homepage": "https://github.com/HuskySlava/node-static-serve#readme",
+    "dependencies": {
+        "express": "^4.18.1",
+        "geoip-lite": "^1.4.5",
+        "telegraf": "^4.8.5"
+    },
+    "type": "module"
 }
