@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-// import {telegramBot} from "./telegram-bot.js";
+import {telegramBot} from "./telegram-bot.js";
 import path from 'path';
 import {fileURLToPath} from 'url';
 
@@ -40,9 +40,9 @@ const logRequest = (req, res, next) => {
         `
     }
 
-    // if(cfg.telegram && cfg.telegram.bot){
-    //     telegramBot.sendMessage(log);
-    // }
+    if(cfg.telegram && cfg.telegram.bot){
+        telegramBot.sendMessage(log);
+    }
     next();
     return;
 }
