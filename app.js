@@ -17,9 +17,15 @@ const logRequest = (req, res, next) => {
     let reqIP = req.headers['cf-connecting-ip'] || 0;
     let location = geoIP.lookup(reqIP);
 
+    if(reqIP === 0) next();
+    const IP_PATTERN = new RegExp(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/);
+
+    if(!IP_PATTERN.test(reqIP)) next();
+
     let log = `
-        [ ${reqTime} ]
+        [ ${reqTime.toString().slice(0, 24)} ]
         [ IP: ${reqIP} ]
+        [ ${IP_PATTERN.test(reqIP)} ]
     `;
 
     if(location){
