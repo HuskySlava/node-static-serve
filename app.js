@@ -23,14 +23,13 @@ const logRequest = (req, res, next) => {
     if(!IP_PATTERN.test(reqIP)) next();
 
     let log = `
-        [ ${reqTime.toString().slice(0, 24)} ]
-        [ IP: ${reqIP} ]
-        [ ${IP_PATTERN.test(reqIP)} ]
+[ ${reqTime.toString().slice(0, 24)} ]
+[ IP: ${reqIP} ]
     `;
 
     if(location){
         log += `
-            [ FROM: ${location["country"]}, ${location["city"]}}]
+[ FROM: ${location["country"]}, ${location["city"]}}]
         `
     }
 
