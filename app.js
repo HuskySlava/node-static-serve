@@ -29,7 +29,7 @@ const logRequest = (req, res, next) => {
 
     if(location){
         log += `
-[ FROM: ${location["country"]}, ${location["city"]}]
+[ FROM: ${location["country"]}, ${location["city"]} ]
         `
     }
 
