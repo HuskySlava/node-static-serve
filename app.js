@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import {telegramBot} from "./telegram-bot.js";
+// import {telegramBot} from "./telegram-bot.js";
 import path from 'path';
 import {fileURLToPath} from 'url';
 
@@ -17,10 +17,17 @@ const logRequest = (req, res, next) => {
     let reqIP = req.headers['cf-connecting-ip'] || 0;
     let location = geoIP.lookup(reqIP);
 
-    if(reqIP === 0) next();
+    if(reqIP === 0) {
+        next();
+        return;
+    }; 
+
     const IP_PATTERN = new RegExp(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/);
 
-    if(!IP_PATTERN.test(reqIP)) next();
+    if(!IP_PATTERN.test(reqIP)) {
+        next();
+        return;
+    };
 
     let log = `
 [ ${reqTime.toString().slice(0, 24)} ]
@@ -33,10 +40,11 @@ const logRequest = (req, res, next) => {
         `
     }
 
-    if(cfg.telegram && cfg.telegram.bot){
-        telegramBot.sendMessage(log);
-    }
+    // if(cfg.telegram && cfg.telegram.bot){
+    //     telegramBot.sendMessage(log);
+    // }
     next();
+    return;
 }
 
 app.use(logRequest, express.static(__dirname + cfg.staticFolder));
