@@ -13,7 +13,7 @@ const listenPort = cfg.serverPort;
 import geoIP from 'geoip-lite';
 
 const recentlyLoggedIPAddresses = []
-const logBounceMS = 10000;
+const logBounceMS = 5000;
 
 const logRequest = (req, res, next) => {
     let reqTime = new Date();
