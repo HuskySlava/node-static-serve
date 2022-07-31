@@ -12,22 +12,24 @@ const cfg = JSON.parse(fs.readFileSync('./cfg.json'));
 const listenPort = cfg.serverPort;
 import geoIP from 'geoip-lite';
 
+const recentlyLoggedIPAddresses = []
+const logBounceMS = 10000;
+
 const logRequest = (req, res, next) => {
     let reqTime = new Date();
     let reqIP = req.headers['cf-connecting-ip'] || 0;
     let location = geoIP.lookup(reqIP);
 
-    if(reqIP === 0) {
-        next();
-        return;
-    }; 
+    if(reqIP === 0) return next();
 
     const IP_PATTERN = new RegExp(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/);
+    if(!IP_PATTERN.test(reqIP)) return next();
 
-    if(!IP_PATTERN.test(reqIP)) {
-        next();
-        return;
-    };
+    if(recentlyLoggedIPAddresses.includes(reqIP)) return next();
+    recentlyLoggedIPAddresses.push(reqIP);
+    setTimeout( () => {
+        recentlyLoggedIPAddresses.splice(recentlyLoggedIPAddresses.indexOf(reqIP), 1);
+    }, logBounceMS);
 
     let log = `
 [ ${reqTime.toString().slice(0, 24)} ]
